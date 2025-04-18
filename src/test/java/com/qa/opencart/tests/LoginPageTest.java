@@ -32,7 +32,7 @@ public class LoginPageTest extends BaseTest {
 	//This Description is coming from allure.
 	@Description("checking login page title ---")
 	@Severity(SeverityLevel.MINOR)
-	@Owner("Naveen Automation Labs")
+	@Owner("Prasanna Kumari")
 	@Issue("Login-123")
 	@Feature("login page title features")
 	@Test(priority=1)
