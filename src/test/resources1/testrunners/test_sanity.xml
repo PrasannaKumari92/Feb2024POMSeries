@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="OpenCart App Test Sanity Suite" verbose="4" parallel="tests" thread-count="3">
+	
+  <test name= "Register Page Test">
+	  <parameter name= "browser" value="chrome"/>
+	 
+	  <classes>
+      <class name="com.qa.opencart.tests.RegisterPageTest"/>
+      </classes>
+  </test> 
+   
+</suite> 
