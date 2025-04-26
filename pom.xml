@@ -7,10 +7,6 @@
   <artifactId>Feb2024POMSeries</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>Feb2024POMSeries</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
