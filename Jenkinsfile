@@ -31,13 +31,17 @@ pipeline
             }
         }
         
+        
+        
+        
         stage("Deploy to QA"){
             steps{
                 echo("deploy to qa")
             }
         }
         
-         
+        
+                
         stage('Run Regression Automation Tests') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -48,6 +52,7 @@ pipeline
             }
         }
                 
+     
         stage('Publish Allure Reports') {
            steps {
                 script {
@@ -91,6 +96,8 @@ pipeline
             }
         }
         
+        
+        
         stage('Publish sanity Extent Report'){
             steps{
                      publishHTML([allowMissing: false,
@@ -102,5 +109,6 @@ pipeline
                                   reportTitles: ''])
             }
         }
+        
     }
 }
