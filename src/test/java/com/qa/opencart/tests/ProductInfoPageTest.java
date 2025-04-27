@@ -59,12 +59,13 @@ public class ProductInfoPageTest extends BaseTest {
 		return ExcelUtil.getTestData(AppConstants.PRODUCT_IMAGES_SHEET_NAME);
 	}
 
-	//@Test(dataProvider="getProductImageData")
-	@Test(dataProvider="getProductImageSheetData")
-	public void productImagesCountTest(String searchKey, String productName, String imageCount) {
+	
+	//@Test(dataProvider="getProductImageSheetData")
+	@Test(dataProvider="getProductImageData")
+	public void productImagesCountTest(String searchKey, String productName, int imagesCount) {
 		searchResultsPage = accountPage.doSearch(searchKey);
 		ProductInfoPage = searchResultsPage.selectProduct(productName);
-		Assert.assertEquals(ProductInfoPage.getProductsImagesCount(), Integer.parseInt(imageCount), AppError.IMAGES_COUNT_MISMATCHED);
+		Assert.assertEquals(ProductInfoPage.getProductsImagesCount(), imagesCount , AppError.IMAGES_COUNT_MISMATCHED);
 	}
 
 	//public void productImagesCountTest(String searchKey, String productName, int imageCount), earlier we have passed
