@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -12,6 +14,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import com.qa.opencart.constants.AppConstants;
 import com.qa.opencart.errors.AppError;
@@ -30,8 +33,7 @@ public class DriverFactory {
 	//After it got implemented by JDK 8.
 
 	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
-
-
+	
 	/**
 	 * This is used to init the driver on the basis on given browser name.
 	 * @param browserName
@@ -48,15 +50,36 @@ public class DriverFactory {
 		switch(browserName.toLowerCase().trim()) {
 		case "chrome" :
 			  //driver = new ChromeDriver();
-			  tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+			  if(Boolean.parseBoolean(prop.getProperty("remote"))){
+				  //run tcs on remote machine/grid:
+				  initRemoteDriver("chrome");
+			  }
+			  else {
+				    //run it in local
+				  tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+			  }
 			  break;
 		case "firefox" :
 			  //driver = new FirefoxDriver();
-			  tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
+			 if(Boolean.parseBoolean(prop.getProperty("remote"))){
+				  //run tcs on remote machine/grid:
+				  initRemoteDriver("firefox");
+			  }
+			  else {
+				    //run it in local
+				  tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+			  }
 			  break;
 	    case "edge" :
 			  //driver = new EdgeDriver();
-	    	  tlDriver.set(new EdgeDriver(optionsManager.getEdgeOptions()));
+	    	  if(Boolean.parseBoolean(prop.getProperty("remote"))){
+				  //run tcs on remote machine/grid:
+				  initRemoteDriver("edge");
+			  }
+			  else {
+				    //run it in local
+				  tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+			  }
 			  break;
 		case "safari" :
 			  //driver = new SafariDriver();
@@ -80,6 +103,33 @@ public class DriverFactory {
 
         return getDriver();
 	}
+
+
+	private void initRemoteDriver(String browserName) {
+		System.out.println("Running it on GRID...with browser: " + browserName);
+		
+		try {
+		switch(browserName) {
+		case "chrome":
+				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),optionsManager.getChromeOptions()));
+		        break;
+		case "firefox":
+			   tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),optionsManager.getFirefoxOptions()));
+	           break;
+		case "egde":
+			   tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),optionsManager.getEdgeOptions()));
+	           break;
+	    default: 
+	    	   System.out.println("plz pass the right browser on grid...");
+		    	  break;
+		   } 
+		}
+		catch (MalformedURLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
 
 	/**
 	 * get the thread local copy of the driver

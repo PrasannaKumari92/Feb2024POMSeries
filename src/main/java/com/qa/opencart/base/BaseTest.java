@@ -34,7 +34,8 @@ public class BaseTest {
 	@Step("setup for the test, inittializing browser: {0}")
 	@Parameters({"browser"})
 	@BeforeTest
-	public void setUp(@Optional("chrome") String browserName) {
+	//public void setUp(@Optional("chrome") String browserName)
+	public void setUp(String browserName) {
 		df = new DriverFactory();
 		prop = df.initProp();
 

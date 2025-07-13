@@ -26,7 +26,7 @@ import io.qameta.allure.Story;
 //--only report will work, retry is not working here
 public class LoginPageTest extends BaseTest {
 
-	//LoginPageTest is a BaseTest class and is a Releastionship
+	//LoginPageTest is a BaseTest class and is a Relationship.
 	//So it should extend only one parent class.
 
 	//This Description is coming from allure.
